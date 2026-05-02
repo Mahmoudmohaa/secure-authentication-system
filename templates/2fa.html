@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2FA Verification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h2>Enter 2FA Code</h2>
+    <div class="box">
+        <input type="text" id="otpCode" placeholder="123456" maxlength="6"
+            style="text-align: center; font-size: 20px; letter-spacing: 5px;"><br>
+        <button onclick="verify()">Verify</button>
+    </div>
+    <script>
+        async function verify() {
+            const email = localStorage.getItem('tempEmail');
+            const code = document.getElementById('otpCode').value;
+            const res = await fetch('/api/verify-2fa', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, code }) });
+            const result = await res.json();
+            if (res.ok) {
+                localStorage.setItem('token', result.token);
+                window.location.href = '/dashboard-page';
+            } else { alert("Invalid Code"); }
+        }
+    </script>
+</body>
+
+</html>

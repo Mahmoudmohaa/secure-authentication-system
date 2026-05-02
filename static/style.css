@@ -1,0 +1,13 @@
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #f4f7f6; color: #333; display: flex; flex-direction: column; align-items: center; padding: 40px; margin: 0; }
+h2, h3 { color: #2c3e50; text-align: center; }
+.box { background: #fff; padding: 25px; margin: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; }
+input, select { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+button { width: 100%; padding: 10px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background 0.3s ease; margin-bottom: 5px; }
+button:hover { background-color: #2980b9; }
+.btn-red { background-color: #e74c3c; } .btn-red:hover { background-color: #c0392b; }
+#qrResult { display: flex; flex-direction: column; align-items: center; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 2px dashed #bdc3c7; border-radius: 8px; }
+#qrResult b { color: #2c3e50; font-size: 14px; margin-bottom: 10px; }
+#qrResult img { max-width: 160px; height: auto; margin: 10px 0; border: 5px solid white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; }
+#qrResult img:hover { transform: scale(1.05); }
+#result { padding: 10px; border-radius: 4px; background-color: #ecf0f1; text-align: center; margin-top: 20px; font-weight: bold;}

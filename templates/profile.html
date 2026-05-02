@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h2>User Profile</h2>
+    <div class="box" id="profileBox">
+        <p>Loading...</p>
+    </div>
+    <button onclick="window.location.href='/dashboard-page'" style="width: 350px;">Back to Dashboard</button>
+    <script>
+        async function loadData() {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = '/';
+            const res = await fetch('/api/profile', { headers: { 'Authorization': `Bearer ${token}` } });
+            const data = await res.json();
+            if (res.ok) {
+                document.getElementById('profileBox').innerHTML = `<p><b>Name:</b> ${data.name}</p><p><b>Email:</b> ${data.email}</p><p><b>Role:</b> <span style="color: blue;">${data.role}</span></p>`;
+            } else { document.getElementById('profileBox').innerHTML = `<p style="color:red;">Error loading profile</p>`; }
+        }
+        loadData();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h2>Secure Auth System</h2>
+    <div class="box">
+        <h3>Login</h3>
+        <input type="email" id="loginEmail" placeholder="Email"><br>
+        <input type="password" id="loginPass" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+    </div>
+    <div class="box">
+        <h3>Register</h3>
+        <input type="text" id="regName" placeholder="Name"><br>
+        <input type="email" id="regEmail" placeholder="Email"><br>
+        <input type="password" id="regPass" placeholder="Password"><br>
+        <select id="regRole">
+            <option value="User">User</option>
+            <option value="Manager">Manager</option>
+            <option value="Admin">Admin</option>
+        </select><br><br>
+        <button onclick="register()">Register</button>
+        <div id="qrResult" style="display: none;"></div>
+    </div>
+    <script>
+        async function register() {
+            const data = {
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPass').value,
+                role: document.getElementById('regRole').value
+            };
+            try {
+                const res = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                const result = await res.json();
+                if (res.ok) {
+                    const qrDiv = document.getElementById('qrResult');
+                    qrDiv.style.display = 'flex';
+                    qrDiv.innerHTML = `<b>Scan this 2FA QR:</b><img src="data:image/png;base64,${result.qr_code_base64}"><b>Secret: ${result.secret_key}</b>`;
+                    alert("Registered! Scan QR code.");
+                } else { alert(result.message); }
+            } catch (err) { alert("Error!"); }
+        }
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPass').value;
+            try {
+                const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+                if (res.ok) {
+                    localStorage.setItem('tempEmail', email);
+                    window.location.href = '/verify-page';
+                } else { alert("Invalid email or password!"); }
+            } catch (err) { alert("Error!"); }
+        }
+    </script>
+</body>
+
+</html>

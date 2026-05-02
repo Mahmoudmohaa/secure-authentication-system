@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Area</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h2>User Area</h2>
+    <div class="box" id="dataBox">
+        <p>Checking Permissions...</p>
+    </div>
+    <button onclick="window.location.href='/dashboard-page'" style="width: 350px;">Back to Dashboard</button>
+    <script>
+        async function loadData() {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = '/';
+
+            const res = await fetch('/api/user', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const result = await res.json();
+            const box = document.getElementById('dataBox');
+
+            if (res.ok) {
+                box.innerHTML = `<h3 style="color:green;">Access Granted</h3><p>${result.data}</p>`;
+            } else {
+                box.innerHTML = `<h3 style="color:red;">Access Denied</h3><p>${result.message}</p>`;
+            }
+        }
+        loadData();
+    </script>
+</body>
+
+</html>

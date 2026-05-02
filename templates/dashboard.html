@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h2>System Dashboard</h2>
+    <div class="box" style="width: 400px;">
+        <button onclick="window.location.href='/profile-page'">👤 My Profile</button>
+        <button onclick="window.location.href='/admin-page'">🔒 Admin Panel</button>
+        <button onclick="window.location.href='/manager-page'">📊 Manager Panel</button>
+        <button onclick="window.location.href='/user-page'">🌐 User Area</button>
+        <br><br>
+        <button onclick="logout()" class="btn-red">Logout</button>
+    </div>
+    <script>
+        if (!localStorage.getItem('token')) window.location.href = '/';
+        function logout() { localStorage.clear(); window.location.href = '/'; }
+    </script>
+</body>
+
+</html>
